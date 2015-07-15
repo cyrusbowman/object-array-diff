@@ -4,7 +4,7 @@ Get the diff of objectA and objectB. If your object is an array of objects or co
 
 ## Usage
 
-### Example 1 - Object:
+### Example 1 - Object
 ```js
 var diff = require('object-array-diff');
 
