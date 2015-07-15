@@ -1,6 +1,6 @@
 # object-array-diff
 
-Get the diff of objectA and objectB. If your object is an array of objects or contains an array of objects only the changed objects in the array are returned. (See example [2](#example-2---array-of-objects) and [3](.#example-3---objects-containing-arrays-of-objects))
+Get the diff of objectA and objectB. If your object is an array of objects or contains an array of objects only the changed objects in the array are returned. (See example [2](#example-2---array-of-objects) and [3](#example-3---objects-containing-arrays-of-objects))
 
 ## Usage
 
