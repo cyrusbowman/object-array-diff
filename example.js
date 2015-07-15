@@ -5,18 +5,19 @@ var original, changed;
 
 //Example 1: Object
 console.log('------------ Example 1 --------------')
-original = {
+
+var original = {
     bacon: true,
     howMuch: 54,
     flavor: 'tastey'
 };
- 
-changed = _.cloneDeep(original);
+var changed = {
+    bacon: false,      //changed
+    howMuch: 10,       //changed
+    flavor: 'tastey',
+    ham: true          //added
+};
 
-//Make some changes
-changed.bacon = false;
-changed.ham = true;
-changed.howMuch = 10;
 //Log results
 console.log(JSON.stringify(diff(original, changed), null, 4));
 
@@ -37,48 +38,66 @@ original = [
 		name: 'andrew'
 	}
 ];
-changed = _.cloneDeep(original);
-
-//Make some changes
-changed.push({
-	id: 3,
-	name: 'alex'
-});
-changed[0].name = 'cyrus bowman';
-//Log results
+var changed = [
+    {
+        id: 0,
+        name: 'cyrus'
+    },
+    {
+        id: 1,
+        name: 'randy'        //changed key
+    },
+    {                        //added object
+        name: 'alex'
+    }
+];
 console.log(JSON.stringify(diff(original, changed), null, 4));
 
 //EXAMPLE 3: Objects containing arrays of objects
 console.log('------------ Example 3 --------------')
 original = {
     name: 'my object',
-    description: 'it\'s an object!',
+    description: 'oh me oh my',
     details: {
         contacts: [
-        	{
-        		id: 0,
-        		name: 'cyrus',
-        		email: 'cyrus@example.com',
+            {
+                id: 0,
+                name: 'cyrus',
+                email: 'cyrus@example.com',
                 deleted: null
-        	},
-        	{
-        		id: 1,
-        		name: 'alex',
-        		email: 'alex@example.com'
-        	}
+            },
+            {
+                id: 1,
+                name: 'alex',
+                email: 'alex@example.com'
+            }
         ]
     }
 };
-changed = _.cloneDeep(original);
-
-//Make some changes
-changed.name = 'New name';
-changed.newKey = 'Added this key:value';
-changed.details.contacts.push({
-	name: 'Added this contact',
-	email: 'andrew@example.com'
-});
-changed.details.contacts[0].deleted = 0;
+changed = {
+    name: 'New name',                         //changed key
+    description: 'oh me oh my',
+    newKey: 'added a key',                    //added key
+    details: {
+        contacts: [
+            {
+                id: 0,
+                name: 'cyrus',
+                email: 'cyrus@example.com',
+                deleted: 0                       //changed key
+            },
+            {
+                id: 1,
+                name: 'alex',
+                email: 'alex@example.com'
+            },
+            {                                 //added object
+                name: 'andrew',
+                email: 'andrew@example.com'
+            }
+        ]
+    }
+};
 
 //Log results
 console.log(JSON.stringify(diff(original, changed), null, 4));
