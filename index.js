@@ -1,52 +1,73 @@
-var diff = require('deep-diff').diff;
-var observableDiff = require('deep-diff').observableDiff;
-var applyChange        = require('deep-diff').applyChange;
 var _ = require('lodash');
+var objectAssign = require('object-assign');
 
-var lhs = {
-    name: 'my object',
-    description: 'it\'s an object!',
-    details: {
-        contacts: {
-        	0: {
-        		id: 0,
-        		name: 'cyrus',
-        		email: 'cyrusbow@gmail.com'
-        	}
+function findChanges(changed, original, dest, path) {
+    _.mapValues(changed, function(value, key) {
+        var newPath = key;
+        if (path != null) {
+            newPath = path + '.' + key;
         }
+        if (_.isObject(value) && _.isEqual(value, _.get(original, newPath)) == false) {
+            return findChanges(value, original, dest, newPath);
+        } else {
+            if(_.includes(opts.alwaysReturn, key)) {
+                //Always include id's
+                _.set(dest, newPath, value);
+            } else if (_.isEqual(value, _.get(original, newPath)) == false) {
+                _.set(dest, newPath, value);
+            }
+        }
+    });
+};
+function removeNulls(object) {
+    if(_.isArray(object)) {
+        for (var i = 0; i < object.length; i++) {
+            if (object[i] == null) {         
+              object.splice(i, 1);
+              i--;
+            }
+        }
+    } else {
+        _.map(object, function(value, key) {
+            if (_.isArray(value)) {
+                for (var i = 0; i < value.length; i++) {
+                    if (value[i] == null) {         
+                      value.splice(i, 1);
+                      i--;
+                    }
+                }
+            } else if (_.isObject(value)) {
+                return removeNulls(value);
+            }
+        });
     }
 };
- 
-var rhs = {
-    name: 'updated object',
-    description: 'it\'s an object!',
-    details: {
-        contacts: {
-        	0: {
-        		id: 0,
-        		name: 'cyrus',
-        		email: 'cyrusbow@gmail.com'
-        	},
-        	1: {
-        		id: 1,
-        		name: 'andrew',
-        		email: 'andrew@gmail.com'
-        	},
-        	2: {
-        		id: 2,
-        		name: 'alexa',
-        		email: 'alex@gmail.com'
-        	}
-        }
+var changes = function(optsOrOriginal, changed) {
+    if (_.isUndefined(changed)) {
+        //Options
+        opts = objectAssign(opts, optsOrOriginal);
+        return;
     }
+    /*
+        Does not show keys in the dest that were
+        in the 'original' but are missing (undefined)
+        in the 'changed'
+    */
+    var original = optsOrOriginal;
+    if(_.isEqual(original, changed)) {
+        return {};
+    }
+    var dest = {};
+    if(_.isArray(original)) {
+        dest = [];
+    }
+    findChanges(changed, original, dest);
+    removeNulls(dest);
+    return dest;
 };
- 
-var differences = diff(lhs, rhs);
+var opts = {
+    alwaysReturn: [] //Always return these in objects
+};
+module.exports = changes;
 
-var it = {};
-observableDiff(lhs, rhs, function (d) {
-    // Apply all changes except those to the 'name' property... 
-    applyChange(it, rhs, d);
-});
 
-console.log(JSON.stringify(it));

@@ -1,16 +1,26 @@
 {
-  "name": "object_diff",
-  "version": "1.0.0",
-  "description": "Tst",
-  "main": "index.js",
+  "name": "object-array-diff",
+  "version": "0.0.1",
+  "description": "Get the diff from object A to object B, including object arrays",
+  "main": "main.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "object",
+    "diff",
+    "array",
+    "patch"
+  ],
+  "author": {
+    "name": "Cyrus Bowman",
+    "email": "cyrus@qlever.io",
+    "url": "http://qlever.io"
+  },
+  "license": "MIT",
   "dependencies": {
-    "deep-diff": "^0.3.2",
-    "lodash": "^3.9.3"
+    "lodash": "^3.9.3",
+    "object-assign": "^3.0.0"
   }
 }
