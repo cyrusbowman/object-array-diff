@@ -2,9 +2,9 @@
   "name": "object-array-diff",
   "version": "0.0.1",
   "description": "Get the diff from object A to object B, including object arrays",
-  "main": "main.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node main.js",
+    "start": "node example.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -22,5 +22,9 @@
   "dependencies": {
     "lodash": "^3.9.3",
     "object-assign": "^3.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/cyrusbowman/object-array-diff.git"
   }
 }
